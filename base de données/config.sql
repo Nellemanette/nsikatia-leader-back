@@ -1,0 +1,9 @@
+DROP USER IF EXISTS n_sikatia_leader_bdd__user_read;
+DROP USER IF EXISTS n_sikatia_leader_bdd__user_update;
+DROP USER IF EXISTS n_sikatia_leader_bdd__user_create;
+DROP USER IF EXISTS n_sikatia_leader_bdd__user_delete;
+
+CREATE USER n_sikatia_leader_bdd__user_read WITH PASSWORD 'n_sikatia_leader_bdd__user_read_tco78L_read_request';
+CREATE USER n_sikatia_leader_bdd__user_update WITH PASSWORD 'n_sikatia_leader_bdd__user_update_AM14j5_update_request';
+CREATE USER n_sikatia_leader_bdd__user_create WITH PASSWORD 'n_sikatia_leader_bdd__user_create_F8sZ39u_create_request';
+CREATE USER n_sikatia_leader_bdd__user_delete WITH PASSWORD 'n_sikatia_leader_bdd__user_delete_bNH6rQ7_delete_request';

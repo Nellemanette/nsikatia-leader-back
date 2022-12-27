@@ -1,0 +1,18 @@
+{
+    "inscrit": true,
+    "code": true,
+    "conduite": true,
+    "conduite_details": {
+        "nbr_heures": "0h - 10h",
+        "demarrage_arret": "bof bof",
+        "vitesse": "bof bof",
+        "freiner": "je suis pas ouf",
+        "allure": "je suis pas ouf",
+        "tourner": "bof bof",
+        "volant": "pas encore commencé...",
+        "braquer": "je gère !",
+        "giratoire": "pas encore commencé...",
+        "autoroute": "je suis pas ouf",
+        "manoeuvre": "pas encore commencé..."
+    }
+}

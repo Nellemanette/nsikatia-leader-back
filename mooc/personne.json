@@ -1,0 +1,14 @@
+{
+    "identite":{
+        "statut": "student",
+        "nom": "Makila",
+        "prenom": "Josué",
+        "age": 21
+    },
+    "coordonnees":{
+        "telephone": "0765237839",
+        "email": "josuem@gmail.com",
+        "info_id": 1,
+        "ville": "Montlhéry"
+    }
+}
