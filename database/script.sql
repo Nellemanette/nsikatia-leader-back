@@ -8,13 +8,13 @@ DROP TABLE IF EXISTS Disponibilite CASCADE;
 DROP TABLE IF EXISTS Reservation CASCADE;
 DROP TABLE IF EXISTS Cours CASCADE; 
 
-DROP TYPE IF EXISTS fonction;
-DROP TYPE IF EXISTS pub;
-DROP TYPE IF EXISTS niveau;
-DROP TYPE IF EXISTS heures;
-DROP TYPE IF EXISTS classe;
-DROP TYPE IF EXISTS tarif;
-DROP TYPE IF EXISTS etat;
+DROP TYPE IF EXISTS fonction CASCADE;
+DROP TYPE IF EXISTS pub CASCADE;
+DROP TYPE IF EXISTS niveau CASCADE;
+DROP TYPE IF EXISTS heures CASCADE;
+DROP TYPE IF EXISTS classe CASCADE;
+DROP TYPE IF EXISTS tarif CASCADE;
+DROP TYPE IF EXISTS etat CASCADE;
 
 CREATE TYPE fonction AS ENUM ('student', 'teacher');
 CREATE TYPE pub AS ENUM ('bouche a oreille', 'reseaux sociaux', 'site web');
@@ -23,6 +23,20 @@ CREATE TYPE heures AS ENUM ('0h - 10h', '10h - 20h', '20h - 30h', '+');
 CREATE TYPE classe AS ENUM ('Code', 'Conduite');
 CREATE TYPE tarif AS ENUM ('10', '30');
 CREATE TYPE etat AS ENUM ('validé', 'provisoire', 'en attente');
+
+/*CREATE TYPE idendite AS(
+    statut fonction,
+    nom VARCHAR(50),
+    prenom VARCHAR(50),
+    age SMALLINT
+);
+
+CREATE TYPE coordonnees AS(
+    telephone CHAR(11),
+    email VARCHAR(80),
+    info_id SMALLINT,
+    ville VARCHAR(20)
+);*/
 
 CREATE TABLE Fiche(
     id SMALLSERIAL,
@@ -59,6 +73,8 @@ CREATE TABLE Personne(
    age SMALLINT NOT NULL,
    telephone CHAR(11) NOT NULL,
    email VARCHAR(80) NOT NULL,
+   --idendite_personne idendite,
+   --coordonnees_personne coordonnees
    info_id SMALLINT NOT NULL,
    ville VARCHAR(20),
    PRIMARY KEY(id),

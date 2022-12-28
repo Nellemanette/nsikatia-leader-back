@@ -1,6 +1,12 @@
+/**
+ * Index file for api route
+ */
+
+// Requirements
 const express = require('express')
 const router = express.Router()
 
+// Import 
 let cours = require('./CoursController')
 let disponibilte = require('./DisponibiliteController')
 let fiche = require('./FicheController');
@@ -9,7 +15,6 @@ let info = require('./InfoController');
 let reservation = require('./ReservationController');
 
 
-//Routes (URL) de l'api Nsikatia Leader
 
 /**
  * Route pour l'entité Cours

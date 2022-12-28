@@ -1,12 +1,14 @@
 let Personne = require('../model/dao/PersonneDAO')
 
 
-async function createPersonne(identite, coordonnees){
+async function createPersonne(identite, coordonnees, info_id){
     let created = {
         identite: {id: 0, statut: '', nom: '', prenom:'', age: ''},
         coordonnees: {telephone: '', email: '', info_id: '', ville: ''}    
     }
-    
+    console.log(identite);
+    console.log(coordonnees);
+    console.log(info_id);
     await Personne.create({ 
         statut: identite.statut,
         nom: identite.nom,
@@ -27,7 +29,7 @@ async function createPersonne(identite, coordonnees){
             created.coordonnees.email = personne.email;
             created.coordonnees.info_id = personne.info_id;
             created.coordonnees.ville = personne.ville;
-
+            //console.log(personne);
           })
           .catch((error) => {
             console.log("** Erreur Création Fiche: "+error)

@@ -39,3 +39,5 @@ const PersonneDAO = database.define('personne', {
 });
 
 module.exports = PersonneDAO;
+
+//https://github.com/sequelize/sequelize/issues/7277
