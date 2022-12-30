@@ -17,7 +17,7 @@ async function deleteFunction(req, res) {
 };
 
 async function readSingleFunction(req, res) {
-    ReservationDTO = await reservationService.readSingleReservation(req.query.id);
+    ReservationDTO = await reservationService.readSinglePersonneReservation(req.query.id);
 
     res.json(ReservationDTO);
 };

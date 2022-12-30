@@ -39,7 +39,7 @@ router.get('/disponibilite_read', disponibilte.readFunction);
  * Route pour l'entité Fiche
  */
 router.post('/fiche_create', fiche.createFunction);
-router.put('/fiche_date_update', fiche.updateFunction);
+router.put('/fiche_update', fiche.updateFunction);
 router.delete('/fiche_delete', fiche.deleteFunction);
 router.get('/fiche_read', fiche.readFunction);
 

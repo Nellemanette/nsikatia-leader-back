@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 let database = require('../../database/connect')
 
-const PersonneDAO = database.define('personne', {
+const PersonneDAO = database[3].define('personne', {
     // attributes
     statut: {
       type: Sequelize.ENUM('student', 'teacher'),

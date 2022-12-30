@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 let database = require('../../database/connect')
 
-const FicheDAO = database.define('fiche', {
+const FicheDAO = database[0].define('fiche', {
     // attributes
     inscrit: {
       type: Sequelize.BOOLEAN,

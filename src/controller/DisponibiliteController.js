@@ -3,7 +3,6 @@ let DisponibiliteDTO = require('../model/dto/DisponibiliteDTO')
 
 async function createFunction(req, res) {
     DisponibiliteDTO = await disponibiliteService.createDispo(req.body.date_debut, req.body.date_fin, req.body.heure_debut, req.body.heure_fin);
-    console.log(typeof CoursDTO);
     res.json(DisponibiliteDTO);
 };
 

@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 let database = require('../../database/connect')
 
-const InfoDAO = database.define('info', {
+const InfoDAO = database[1].define('info', {
     // attributes
     prospect: {
       type: Sequelize.ENUM('bouche a oreille', 'réseaux sociaux', 'site web'),

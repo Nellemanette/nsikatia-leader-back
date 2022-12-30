@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 let database = require('../../database/connect')
 
-const ReservationDAO = database.define('reservation', {
+const ReservationDAO = database[2].define('reservation', {
     // attributes
     date_res: {
         type: Sequelize.DATE,

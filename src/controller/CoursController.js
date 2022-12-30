@@ -3,22 +3,22 @@ let CoursDTO = require('../model/dto/CoursDTO')
 
 async function createFunction(req, res) {
     CoursDTO = await coursService.createCours(req.body.nom, req.body.prix);
-    console.log(res);
     res.json(CoursDTO);
 };
 
 async function updateNameFunction(req, res) {
-    CoursDTO = await coursService.updateCoursName(req.body.id, req.body.nom);
+    console.log("Update Cours");
+    CoursDTO = await coursService.updateCoursName(req.query.id, req.body.nom);
     res.json(CoursDTO);
 };
 
 async function updatePriceFunction(req, res) {
-    CoursDTO = await coursService.updateCoursPrice(req.body.id, req.body.prix);
+    CoursDTO = await coursService.updateCoursPrice(req.query.id, req.body.prix);
     res.json(CoursDTO);
 };
 
 async function deleteFunction(req, res) {
-    CoursDTO = await coursService.deleteCours(req.body.id);
+    CoursDTO = await coursService.deleteCours(req.query.id);
     res.json(CoursDTO);
 };
 
@@ -29,7 +29,7 @@ async function readListFunction(req, res) {
 };
 
 async function readSingleFunction(req, res) {
-    CoursDTO = await coursService.getCoursById(req.body.id);
+    CoursDTO = await coursService.getCoursById(req.query.id);
     res.json(CoursDTO);
 };
 

@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 let database = require('../../database/connect')
 
-const DisponibiliteDAO = database.define('disponibilite', {
+const DisponibiliteDAO = database[0].define('disponibilite', {
     // attributes
     date_debut: {
       type: Sequelize.DATE,

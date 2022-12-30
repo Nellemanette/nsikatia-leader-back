@@ -1,7 +1,6 @@
 const Sequelize = require('sequelize');
 let database = require('../../database/connect')
-
-const CoursDAO = database.define('cours', {
+const CoursDAO = database[1].define('cours', {
     // attributes:
     nom: {
       type: Sequelize.ENUM('Code', 'Conduite'),
