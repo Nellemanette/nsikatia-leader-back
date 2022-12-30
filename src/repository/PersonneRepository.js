@@ -1,14 +1,11 @@
 let Personne = require('../model/dao/PersonneDAO')
 
 
-async function createPersonne(identite, coordonnees, info_id){
+async function createPersonne(identite, coordonnees){
     let created = {
         identite: {id: 0, statut: '', nom: '', prenom:'', age: ''},
         coordonnees: {telephone: '', email: '', info_id: '', ville: ''}    
     }
-    console.log(identite);
-    console.log(coordonnees);
-    console.log(info_id);
     await Personne.create({ 
         statut: identite.statut,
         nom: identite.nom,
@@ -62,18 +59,19 @@ async function updatePersonne(personneId, identite, coordonnees){
     }, {
         where: {
           id: personneId
-        }
+        },
+        returning: true
     }).then(personne => {
-        console.log("Disponibilite auto-generated ID:", personne.id);
-        updated.identite.id = personne.id;
-        updated.identite.statut = personne.statut;
-        updated.identite.nom = personne.nom;
-        updated.identite.prenom = personne.prenom;
-        updated.identite.age = personne.age;
-        updated.coordonnees.telephone = personne.telephone;
-        updated.coordonnees.email = personne.email;
-        updated.coordonnees.info_id = personne.info_id;
-        updated.coordonnees.ville = personne.ville;
+        console.log("Disponibilite auto-generated ID:", personne[1][0].dataValues.id);
+        updated.identite.id = personne[1][0].dataValues.id;
+        updated.identite.statut = personne[1][0].dataValues.statut;
+        updated.identite.nom = personne[1][0].dataValues.nom;
+        updated.identite.prenom = personne[1][0].dataValues.prenom;
+        updated.identite.age = personne[1][0].dataValues.age;
+        updated.coordonnees.telephone = personne[1][0].dataValues.telephone;
+        updated.coordonnees.email = personne[1][0].dataValues.email;
+        updated.coordonnees.info_id = personne[1][0].dataValues.info_id;
+        updated.coordonnees.ville = personne[1][0].dataValues.ville;
         console.log("Done");
     });
     return updated;
@@ -113,14 +111,20 @@ async function getPersonneById(personneId){
             }
         }
     ).then(personne => {
-        single.identite.id = personne[0].dataValues.id;
-        single.identite.nom = personne[0].dataValues.nom;
-        single.identite.prenom = personne[0].dataValues.prenom;
-        single.identite.age = personne[0].dataValues.age;
-        single.coordonnees.email = personne[0].dataValues.email;
-        single.coordonnees.telephone= personne[0].dataValues.telephone;
-        single.coordonnees.ville = personne[0].dataValues.ville;
-        single.coordonnees.info_id = personne[0].dataValues.info_id;
+        if(personne.length == 0){
+            single = personne;
+        }else{
+            single.identite.id = personne[0].dataValues.id;
+            single.identite.nom = personne[0].dataValues.nom;
+            single.identite.prenom = personne[0].dataValues.prenom;
+            single.identite.age = personne[0].dataValues.age;
+            single.identite.statut = personne[0].dataValues.statut;
+            single.coordonnees.email = personne[0].dataValues.email;
+            single.coordonnees.telephone= personne[0].dataValues.telephone;
+            single.coordonnees.ville = personne[0].dataValues.ville;
+            single.coordonnees.info_id = personne[0].dataValues.info_id;
+        }
+
     });
 
     return single;

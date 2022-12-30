@@ -27,9 +27,11 @@ async function updateInfo(infoId, prospect, fiche_id){
     }, {
         where: {
           id: infoId
-        }
+        },
+        returning: true
     }).then(info => {
-        updated = info;
+        //updated = info;
+        updated = info[1][0].dataValues;
         console.log("Done");
     });
     return updated;
@@ -57,7 +59,9 @@ async function getInfoById(infoId){
             }
         }
     ).then(info => {
-        single = info[0].dataValues;
+        //single = info[0].dataValues;
+        single = info.length == 0 ? info : info[0].dataValues;
+
     });
 
     return single;

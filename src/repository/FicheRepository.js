@@ -77,24 +77,25 @@ async function updateFiche(ficheId, inscrit, code,conduite,conduite_details){
     }, {
         where: {
           id: ficheId
-        }
+        },
+        returning: true
     }).then(fiche => {
-        console.log("Disponibilite auto-generated ID:", fiche.id);
-        updated.id = fiche.id;
-        updated.inscrit = fiche.inscrit;
-        updated.code = fiche.code;
-        updated.conduite = fiche.conduite;
-        updated.conduite_details.nbr_heures = fiche.nbr_heures;
-        updated.conduite_details.demarrage_arret = fiche.demarrage_arret;
-        updated.conduite_details.vitesse = fiche.vitesse;
-        updated.conduite_details.freiner = fiche.freiner;
-        updated.conduite_details.allure = fiche.allure;
-        updated.conduite_details.tourner = fiche.tourner;
-        updated.conduite_details.volant = fiche.volant;
-        updated.conduite_details.braquer = fiche.braquer;
-        updated.conduite_details.giratoire = fiche.giratoire;
-        updated.conduite_details.autoroute = fiche.autoroute;
-        updated.conduite_details.manoeuvre = fiche.manoeuvre;
+        console.log("Disponibilite auto-generated ID:", fiche[1][0].id);
+        updated.id = fiche[1][0].dataValues.id;
+        updated.inscrit = fiche[1][0].inscrit;
+        updated.code = fiche[1][0].code;
+        updated.conduite = fiche[1][0].conduite;
+        updated.conduite_details.nbr_heures = fiche[1][0].nbr_heures;
+        updated.conduite_details.demarrage_arret = fiche[1][0].demarrage_arret;
+        updated.conduite_details.vitesse = fiche[1][0].vitesse;
+        updated.conduite_details.freiner = fiche[1][0].freiner;
+        updated.conduite_details.allure = fiche[1][0].allure;
+        updated.conduite_details.tourner = fiche[1][0].tourner;
+        updated.conduite_details.volant = fiche[1][0].volant;
+        updated.conduite_details.braquer = fiche[1][0].braquer;
+        updated.conduite_details.giratoire = fiche[1][0].giratoire;
+        updated.conduite_details.autoroute = fiche[1][0].autoroute;
+        updated.conduite_details.manoeuvre = fiche[1][0].manoeuvre;
         console.log("Done");
     });
     return updated;
@@ -134,21 +135,26 @@ async function getFicheById(ficheId){
             }
         }
     ).then(fiche => {
-        single.id = fiche[0].dataValues.id;
-        single.inscrit = fiche[0].dataValues.inscrit;
-        single.code = fiche[0].dataValues.code;
-        single.conduite = fiche[0].dataValues.conduite;
-        single.conduite_details.nbr_heures = fiche[0].dataValues.nbr_heures;
-        single.conduite_details.demarrage_arret = fiche[0].dataValues.demarrage_arret;
-        single.conduite_details.vitesse = fiche[0].dataValues.vitesse;
-        single.conduite_details.freiner = fiche[0].dataValues.freiner;
-        single.conduite_details.allure = fiche[0].dataValues.allure;
-        single.conduite_details.tourner = fiche[0].dataValues.tourner;
-        single.conduite_details.volant = fiche[0].dataValues.volant;
-        single.conduite_details.braquer = fiche[0].dataValues.braquer;
-        single.conduite_details.giratoire = fiche[0].dataValues.giratoire;
-        single.conduite_details.autoroute = fiche[0].dataValues.autoroute;
-        single.conduite_details.manoeuvre = fiche[0].dataValues.manoeuvre;
+        if(fiche.length == 0)
+            single = fiche;
+        else{
+            single.id = fiche[0].dataValues.id;
+            single.inscrit = fiche[0].dataValues.inscrit;
+            single.code = fiche[0].dataValues.code;
+            single.conduite = fiche[0].dataValues.conduite;
+            single.conduite_details.nbr_heures = fiche[0].dataValues.nbr_heures;
+            single.conduite_details.demarrage_arret = fiche[0].dataValues.demarrage_arret;
+            single.conduite_details.vitesse = fiche[0].dataValues.vitesse;
+            single.conduite_details.freiner = fiche[0].dataValues.freiner;
+            single.conduite_details.allure = fiche[0].dataValues.allure;
+            single.conduite_details.tourner = fiche[0].dataValues.tourner;
+            single.conduite_details.volant = fiche[0].dataValues.volant;
+            single.conduite_details.braquer = fiche[0].dataValues.braquer;
+            single.conduite_details.giratoire = fiche[0].dataValues.giratoire;
+            single.conduite_details.autoroute = fiche[0].dataValues.autoroute;
+            single.conduite_details.manoeuvre = fiche[0].dataValues.manoeuvre;
+        }
+
     });
 
     return single;

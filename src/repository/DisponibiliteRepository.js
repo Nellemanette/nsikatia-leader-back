@@ -37,9 +37,10 @@ async function updateDateDispo(dispoId, start_date, end_date){
     await Disponibilite.update({ date_debut: start_date, date_fin: end_date}, {
         where: {
           id: dispoId
-        }
+        },
+        returning: true
     }).then(dispo => {
-        updated = dispo;
+        updated = dispo[1][0].dataValues;
         console.log("Done");
     });
     return updated;
@@ -57,9 +58,11 @@ async function updateTimeDispo(dispoId, start_time, end_time){
     await Disponibilite.update({ heure_debut: start_time, heure_fin: end_time}, {
         where: {
           id: dispoId
-        }
+        },
+        returning: true
     }).then(dispo => {
-        updated = dispo;
+        //updated = dispo;
+        updated = dispo[1][0].dataValues;
         console.log("Done");
     });
     return updated;
@@ -95,7 +98,7 @@ async function getDispoById(dispoId){
             }
         }
     ).then(dispo => {
-        single = dispo[0].dataValues;
+        single = dispo.length == 0 ? dispo : dispo[0].dataValues;
     });
 
     return single;

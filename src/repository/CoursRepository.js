@@ -3,18 +3,15 @@ let Cours = require('../model/dao/CoursDAO')
 //Create a new cours
 async function createCours(name, price){
 
-    let nouveau = {};
+    let created = {};
     await Cours.create({ nom: name, prix: price }).then(cours => {
-            console.log("Cours auto-generated ID:", cours.id);
-            console.log("Cours NAME:", cours.nom);
-            console.log("Cours PRIX:", cours.prix);
-            nouveau = cours;
+            created = cours;
           })
           .catch((error) => {
-            console.log("** Erreur Création Cours: "+error)
+            console.log("** Erreur Création Cours: " + error)
           });
     
-    return nouveau;
+    return created;
  
 }
 
@@ -23,9 +20,10 @@ async function updateCoursName(coursId, coursName){
     await Cours.update({ nom: coursName}, {
         where: {
           id: coursId
-        }
+        },
+        returning: true
     }).then(cours => {
-        updated = cours;
+        updated = cours[1][0].dataValues;
         console.log("Done");
     });
     return updated;
@@ -36,9 +34,10 @@ async function updateCoursPrice(coursId, coursPrice){
     await Cours.update({ prix: coursPrice}, {
         where: {
           id: coursId
-        }
+        },
+        returning: true
     }).then(cours => {
-        updated = cours;
+        updated = cours[1][0].dataValues;
         console.log("Done");
     });
     console.log(updated)
@@ -78,7 +77,7 @@ async function getCoursById(coursId){
             }
         }
     ).then(cours => {
-        single = cours[0].dataValues;
+        single = cours.length == 0 ? cours : cours[0].dataValues;
     });
 
     return single;

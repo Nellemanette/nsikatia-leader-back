@@ -23,7 +23,7 @@ async function createReservation(date_res, heure_debut, heure_fin, statut, cours
 }
 
 async function updateReservation(reservationId, date_res, heure_debut, heure_fin, statut, cours_id, eleve_id){
-    let updated = {}
+    let updated = {};
     await Reservation.update({ 
         date_res: date_res,
         heure_debut: heure_debut,
@@ -34,11 +34,15 @@ async function updateReservation(reservationId, date_res, heure_debut, heure_fin
     }, {
         where: {
           id: reservationId
-        }
+        },
+        returning: true
     }).then(reservation => {
-        updated = reservation;
+        //updated = reservation;
+        updated = reservation[1][0].dataValues;
         console.log("Done");
-    });
+    }).catch((error) => {
+        console.log("** Erreur Update Réservation: "+error)
+      });
     return updated;
 }
 
@@ -54,7 +58,7 @@ async function deleteReservation(reservationId){
     return deleted;
 }
 
-async function getReservationById(personneId){
+async function getReservationsByPersonneId(personneId){
     let list = {}
     await Reservation.findAll(
         {
@@ -79,4 +83,4 @@ async function getReservations(){
     return list;
 }
 
-module.exports = {createReservation, updateReservation, getReservationById, deleteReservation, getReservations};
+module.exports = {createReservation, updateReservation, getReservationsByPersonneId, deleteReservation, getReservations};

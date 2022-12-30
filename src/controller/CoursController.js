@@ -3,7 +3,7 @@ let CoursDTO = require('../model/dto/CoursDTO')
 
 async function createFunction(req, res) {
     CoursDTO = await coursService.createCours(req.body.nom, req.body.prix);
-    console.log(typeof CoursDTO);
+    console.log(res);
     res.json(CoursDTO);
 };
 

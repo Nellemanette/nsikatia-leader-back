@@ -11,8 +11,8 @@ async function updateReservation(reservationId, id, date_res, heure_debut, heure
     return converter.getReservationDTO(dao);
 }
 
-async function readSingleReservation(personneId){
-    let daoList = await repository.getReservationById(personneId);   
+async function readSinglePersonneReservation(personneId){
+    let daoList = await repository.getReservationsByPersonneId(personneId);   
     return JSON.parse(daoList); 
     //return converter.getReservationDTO(dao);
 }
@@ -29,4 +29,4 @@ async function deleteReservation(personneId){
     return converter.getReservationDTO(dao);
 }
 
-module.exports = {createReservation, updateReservation, readSingleReservation, readListReservation, deleteReservation};
+module.exports = {createReservation, updateReservation, readSinglePersonneReservation, readListReservation, deleteReservation};
