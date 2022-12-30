@@ -90,6 +90,8 @@ async function deletePersonne(personneId){
         }
     }).then(() => {
         console.log("Cours deleted");
+    }).catch((error) => {
+        console.log("** Erreur Suppression Personne: "+error)
     });
     return deleted;
 }

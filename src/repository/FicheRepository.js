@@ -114,6 +114,8 @@ async function deleteFiche(ficheId){
         }
     }).then(() => {
         console.log("Cours deleted");
+    }).catch((error) => {
+        console.log("** Erreur Suppression Fiche: "+error)
     });
     return deleted;
 }

@@ -12,7 +12,7 @@ async function createReservation(date_res, heure_debut, heure_fin, statut, cours
         cours_id: cours_id,
         eleve_id: eleve_id,
     }).then(reservation => {
-            console.log("Disponibilite auto-generated ID:", reservation.id);
+            console.log("Reservation auto-generated ID:", reservation.id);
             created = reservation;
           })
           .catch((error) => {
