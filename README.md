@@ -9,6 +9,7 @@
 ├───deployment            <- Files used to deploy application 
 ├───dataset               <- Files used to test api application 
 └───src      
+│  ├───constants          <- Files used to define constants used by the application
 │  ├───controller         <- Files used to orient request (Controller layer)
 │  ├───database           <- Files used to perform connection with database 
 │  ├───model              <- Files used to represent data application (Model layer) 
