@@ -7,7 +7,6 @@ async function createFunction(req, res) {
 };
 
 async function updateNameFunction(req, res) {
-    console.log("Update Cours");
     CoursDTO = await coursService.updateCoursName(req.query.id, req.body.nom);
     res.json(CoursDTO);
 };

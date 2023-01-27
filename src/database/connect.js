@@ -19,7 +19,6 @@ for(const element of datasources) {
 }
 
 for(const element of db) {
-    console.log(element)
     element
       .authenticate()
       .then(() => {

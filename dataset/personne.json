@@ -7,8 +7,11 @@
     },
     "coordonnees":{
         "telephone": "0765237839",
-        "email": "josuem@gmail.com",
         "info_id": 1,
         "ville": "Montlhéry"
+    },
+    "compte":{
+        "email": "josuem@gmail.com",
+        "mot_de_passe": "jojoTest"
     }
 }
