@@ -97,6 +97,8 @@ async function updateFiche(ficheId, inscrit, code,conduite,conduite_details){
         updated.conduite_details.autoroute = fiche[1][0].autoroute;
         updated.conduite_details.manoeuvre = fiche[1][0].manoeuvre;
         console.log("Done");
+    }).catch((error) => {
+        console.log("** Erreur Création Fiche: "+error)
     });
     return updated;
 }
