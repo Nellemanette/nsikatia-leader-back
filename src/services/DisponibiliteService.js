@@ -15,8 +15,8 @@ async function updateTimeDispo(id, start_time, end_time){
     let dao = await repository.updateTimeDispo(id, start_time, end_time);   
     return converter.getDisponibiliteDTO(dao);
 }
-async function readDispo(dispoId){
-    let dao = await repository.getDispoById(dispoId);   
+async function readDispo(){
+    let dao = await repository.getDispo();   
     return converter.getDisponibiliteDTO(dao);
 }
 

@@ -22,7 +22,7 @@ async function deleteFunction(req, res) {
 };
 
 async function readFunction(req, res) {
-    DisponibiliteDTO = await disponibiliteService.readDispo(req.query.id);
+    DisponibiliteDTO = await disponibiliteService.readDispo();
     res.json(DisponibiliteDTO);
 };
 

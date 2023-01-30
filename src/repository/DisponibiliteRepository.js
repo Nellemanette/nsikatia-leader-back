@@ -11,6 +11,10 @@ let Disponibilite = require('../model/dao/DisponibiliteDAO')
 async function createDispo(start_date, end_date, start_time, end_time){
 
     let created = {};
+    const row = await Disponibilite.findOne({});    
+    if (row) {
+        await row.destroy(); // deletes the row
+    }
     await Disponibilite.create({ date_debut: start_date, date_fin: end_date, heure_debut: start_time, heure_fin: end_time}).then(dispo => {
             console.log("Disponibilite auto-generated ID:", dispo.id);
             console.log("Disponibilite DATE:", dispo.date_debut + " - " + dispo.date_fin);
@@ -90,12 +94,12 @@ async function deleteDispo(dispoId){
  * @param {*} dispoId id de la disponibilité à lire
  * @returns 
  */
-async function getDispoById(dispoId){
+async function getDispo(){
     let single = {};
     await Disponibilite.findAll({
-            where: {
+            /*where: {
               id: dispoId
-            }
+            }*/
         }
     ).then(dispo => {
         single = dispo.length == 0 ? dispo : dispo[0].dataValues;
@@ -104,4 +108,4 @@ async function getDispoById(dispoId){
     return single;
 }
 
-module.exports = {createDispo, updateDateDispo, updateTimeDispo, getDispoById, deleteDispo};
+module.exports = {createDispo, updateDateDispo, updateTimeDispo, getDispo, deleteDispo};
