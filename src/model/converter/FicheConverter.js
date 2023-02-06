@@ -1,7 +1,11 @@
+const { fiche } = require("../../constants/url");
 let FicheDTO = require("../dto/FicheDTO");
 
 function getFicheDTO(ficheDAO){
-    return new FicheDTO(ficheDAO.id, ficheDAO.inscrit, ficheDAO.code, ficheDAO.conduite, ficheDAO.conduite_details);
+    if(ficheDAO==[] || ficheDAO=={})
+        return {};
+    return new FicheDTO(ficheDAO);
+
 }
 
 module.exports = {getFicheDTO};

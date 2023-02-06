@@ -1,7 +1,9 @@
 let InfoDTO = require("../dto/InfoDTO");
 
 function getInfoDTO(infoDAO){
-    return new InfoDTO(infoDAO.id, infoDAO.prospect, infoDAO.fiche_id);
+    if(infoDAO==[] || infoDAO=={})
+        return {};
+    return new InfoDTO(infoDAO);
 }
 
 module.exports = {getInfoDTO};
