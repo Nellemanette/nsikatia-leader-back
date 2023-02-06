@@ -1,14 +1,17 @@
+const PratiqueDTO = require("./PratiqueDTO");
+
 class FicheDTO{
 
   //contructor
-  constructor(id, inscrit, code,conduite, conduite_details){
-    this.id = id;
-    this.inscrit = inscrit;
-    this.code = code;
-    this.conduite = conduite;
-    this.conduite_details= conduite_details;
+  constructor(ficheDAO){
+    console.log("*** FICHE ***")
+    //console.log(ficheDAO)
+    this.id = ficheDAO.id;
+    this.inscrit = ficheDAO.inscrit;
+    this.code = ficheDAO.code;
+    this.conduite = ficheDAO.conduite;
+    this.pratique = new PratiqueDTO(ficheDAO.pratique);
   }
-
   //method
 }
 
