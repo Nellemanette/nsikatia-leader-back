@@ -1,42 +1,44 @@
 const Sequelize = require('sequelize');
 let database = require('../../database/connect')
 
-const PersonneDAO = database[3].define('personne', {
+
+let IdentiteDAO = require('./IdentiteDAO')
+let CompteDAO = require('./CompteDAO')
+let InfoDAO = require('./InfoDAO')
+
+const PersonneDAO = database[1].define('personne', {
     // attributes
-    statut: {
-      type: Sequelize.ENUM('student', 'teacher'),
-      allowNull: false
+    identite_id: {
+      type: Sequelize.SMALLINT,
+      allowNull: false,
     },
-    nom: {
-        type: Sequelize.STRING(50),
-    },
-    prenom: {
-        type: Sequelize.STRING(50),
-        allowNull: false
-    },
-    age: {
+    compte_id: {
         type: Sequelize.SMALLINT,
-        allowNull: false
-    },
-    telephone: {
-        type: Sequelize.STRING(11),
-        allowNull: false
-    },
-    email: {
-        type: Sequelize.STRING(80),
-        allowNull: false
+        allowNull: false,
     },
     info_id: {
         type: Sequelize.SMALLINT,
-        allowNull: false
+        allowNull: false,
     },
-    ville: {
-        type: Sequelize.STRING(20)
-    },
-  }, {
+  }, 
+  {
     timestamps: false, // options
     freezeTableName: true //Evite que Sequelize pluralise le noms des tables par défaut
 });
+
+//PersonneDAO.associate = (models) => {// A VOIR
+  PersonneDAO.belongsTo(IdentiteDAO, {
+        foreignKey: 'identite_id',
+  });
+//}
+  
+  PersonneDAO.belongsTo(CompteDAO, {
+        foreignKey: 'compte_id'
+  });
+
+  PersonneDAO.belongsTo(InfoDAO, {
+        foreignKey: 'info_id'
+  });
 
 module.exports = PersonneDAO;
 
