@@ -1,8 +1,8 @@
 {
     "date_res": "2022-02-12",
-    "heure_debut": "14:00",
-    "heure_fin": "16:00",
+    "heure_debut": "14:00:00",
+    "heure_fin": "16:00:00",
     "statut": "en attente",
-    "cours_id": 2,
+    "cours_id": 3,
     "eleve_id": 3
 }

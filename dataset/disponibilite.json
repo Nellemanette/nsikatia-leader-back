@@ -1,8 +1,6 @@
-[
-    {
-        "date_debut": "2022-12-25",
-        "date_fin": "2022-12-29",
-        "heure_debut": "12:00",
-        "heure_fin": "17:00"
-    }
-]
+{
+    "date_debut": "2022-12-25",
+    "date_fin": "2022-12-29",
+    "heure_debut": "12:00:00",
+    "heure_fin": "17:00:00"
+}
