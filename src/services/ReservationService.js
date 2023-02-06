@@ -1,18 +1,18 @@
 let repository = require('../repository/ReservationRepository');
 let converter = require('../model/converter/ReservationConverter');
 
-async function createReservation(date_res, heure_debut, heure_fin, statut, cours_id, eleve_id){
-    let dao = await repository.createReservation(date_res, heure_debut, heure_fin, statut, cours_id, eleve_id);   
+async function createReservation(reservation){
+    let dao = await repository.createReservation(reservation);   
     return converter.getReservationDTO(dao);
 }
 
-async function updateReservation(reservationId, id, date_res, heure_debut, heure_fin, statut, cours_id, eleve_id){
-    let dao = await repository.updateReservation(reservationId, id, date_res, heure_debut, heure_fin, statut, cours_id, eleve_id);   
+async function updateReservation(url, reservation){
+    let dao = await repository.updateReservation(url, reservation);   
     return converter.getReservationDTO(dao);
 }
 
-async function readSinglePersonneReservation(personneId){
-    let daoList = await repository.getReservationsByPersonneId(personneId);   
+async function readSinglePersonneReservation(url){
+    let daoList = await repository.getReservationsByPersonneId(url);   
     return JSON.parse(daoList); 
     //return converter.getReservationDTO(dao);
 }
@@ -24,8 +24,8 @@ async function readListReservation(){
 }
 
 
-async function deleteReservation(personneId){
-    let dao = await repository.deleteReservation(personneId);   
+async function deleteReservation(url){
+    let dao = await repository.deleteReservation(url);   
     return converter.getReservationDTO(dao);
 }
 
