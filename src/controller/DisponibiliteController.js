@@ -2,22 +2,22 @@ let disponibiliteService = require('../services/DisponibiliteService')
 let DisponibiliteDTO = require('../model/dto/DisponibiliteDTO')
 
 async function createFunction(req, res) {
-    DisponibiliteDTO = await disponibiliteService.createDispo(req.body.date_debut, req.body.date_fin, req.body.heure_debut, req.body.heure_fin);
+    DisponibiliteDTO = await disponibiliteService.createDispo(req.body);
     res.json(DisponibiliteDTO);
 };
 
 async function updateDateFunction(req, res) {
-    DisponibiliteDTO = await disponibiliteService.updateDateDispo(req.query.id, req.body.date_debut, req.body.date_fin);
+    DisponibiliteDTO = await disponibiliteService.updateDateDispo(req.query, req.body);
     res.json(DisponibiliteDTO);
 };
 
 async function updateTimeFunction(req, res) {
-    DisponibiliteDTO = await disponibiliteService.updateTimeDispo(req.query.id, req.body.heure_debut, req.body.heure_fin);
+    DisponibiliteDTO = await disponibiliteService.updateTimeDispo(req.query, req.body);
     res.json(DisponibiliteDTO);
 };
 
 async function deleteFunction(req, res) {
-    DisponibiliteDTO = await disponibiliteService.deleteDispo(req.query.id);
+    DisponibiliteDTO = await disponibiliteService.deleteDispo(req.query);
     res.json(DisponibiliteDTO);
 };
 
