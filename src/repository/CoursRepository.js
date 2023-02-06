@@ -1,10 +1,10 @@
 let Cours = require('../model/dao/CoursDAO')
 
 //Create a new cours
-async function createCours(name, price){
-
+async function createCours(cours){
+    console.log(cours)
     let created = {};
-    await Cours.create({ nom: name, prix: price }).then(cours => {
+    await Cours.create({ nom: cours.nom, prix: cours.prix }).then(cours => {
             created = cours;
           })
           .catch((error) => {
@@ -15,11 +15,11 @@ async function createCours(name, price){
  
 }
 
-async function updateCoursName(coursId, coursName){
+async function updateCoursName(url, cours){
     let updated = {};
-    await Cours.update({ nom: coursName}, {
+    await Cours.update({ nom: cours.nom}, {
         where: {
-          id: coursId
+          id: url.id
         },
         returning: true
     }).then(cours => {
@@ -29,11 +29,11 @@ async function updateCoursName(coursId, coursName){
     return updated;
 }
 
-async function updateCoursPrice(coursId, coursPrice){
+async function updateCoursPrice(url, cours){
     let updated = {};
-    await Cours.update({ prix: coursPrice}, {
+    await Cours.update({ prix: cours.prix}, {
         where: {
-          id: coursId
+          id: url.id
         },
         returning: true
     }).then(cours => {
@@ -46,11 +46,11 @@ async function updateCoursPrice(coursId, coursPrice){
 
 
 //Delete a cours based on id
-async function deleteCours(coursId){
+async function deleteCours(url){
     let deleted = {}
     await Cours.destroy({
         where: {
-          id: coursId
+          id: url.id
         }
     }).then(() => {
         console.log("Cours deleted");
@@ -64,16 +64,18 @@ async function getCours(){
     await Cours.findAll().then(cours => {
         list = cours;
         //console.log("All cours:", JSON.stringify(cours, null, 4));
+    }).catch((error) => {
+        console.log("** Erreur Lecture Cours: " + error)
     });
 
     return list;
 }
 
-async function getCoursById(coursId){
+async function getCoursById(url){
     let single = {};
     await Cours.findAll({
             where: {
-              id: coursId
+              id: url.id
             }
         }
     ).then(cours => {
