@@ -1,10 +1,14 @@
+const FicheDTO = require("../dto/FicheDTO");
+
 class InfoDTO{
 
   //contructor
-  constructor(id, prospect, fiche_id){
-    this.id = id;
-    this.prospect = prospect;
-    this.fiche_id = fiche_id;
+  constructor(infoDAO){
+    console.log(" *** INFO ***")
+    this.id = infoDAO.id;
+    this.prospect = infoDAO.prospect;
+    this.fiche_id = infoDAO.fiche_id;
+    this.fiche = new FicheDTO(infoDAO.fiche)
   }
   //method
 }

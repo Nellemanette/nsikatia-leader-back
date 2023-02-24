@@ -2,22 +2,22 @@ let coursService = require('../services/CoursService')
 let CoursDTO = require('../model/dto/CoursDTO')
 
 async function createFunction(req, res) {
-    CoursDTO = await coursService.createCours(req.body.nom, req.body.prix);
+    CoursDTO = await coursService.createCours(req.body);
     res.json(CoursDTO);
 };
 
 async function updateNameFunction(req, res) {
-    CoursDTO = await coursService.updateCoursName(req.query.id, req.body.nom);
+    CoursDTO = await coursService.updateCoursName(req.query, req.body);
     res.json(CoursDTO);
 };
 
 async function updatePriceFunction(req, res) {
-    CoursDTO = await coursService.updateCoursPrice(req.query.id, req.body.prix);
+    CoursDTO = await coursService.updateCoursPrice(req.query, req.body);
     res.json(CoursDTO);
 };
 
 async function deleteFunction(req, res) {
-    CoursDTO = await coursService.deleteCours(req.query.id);
+    CoursDTO = await coursService.deleteCours(req.query);
     res.json(CoursDTO);
 };
 
@@ -28,7 +28,7 @@ async function readListFunction(req, res) {
 };
 
 async function readSingleFunction(req, res) {
-    CoursDTO = await coursService.getCoursById(req.query.id);
+    CoursDTO = await coursService.getCoursById(req.query);
     res.json(CoursDTO);
 };
 

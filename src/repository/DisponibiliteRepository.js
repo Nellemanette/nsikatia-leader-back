@@ -8,10 +8,20 @@ let Disponibilite = require('../model/dao/DisponibiliteDAO')
  * @param {*} end_time heure de fin de la disponibilité
  * @returns l'objet dispo créé
  */
-async function createDispo(start_date, end_date, start_time, end_time){
-
+async function createDispo(dispo){
+    console.log(dispo)
     let created = {};
-    await Disponibilite.create({ date_debut: start_date, date_fin: end_date, heure_debut: start_time, heure_fin: end_time}).then(dispo => {
+    const row = await Disponibilite.findOne({});    
+    if (row) {
+        await row.destroy(); // deletes the row
+    }
+    await Disponibilite.create({ 
+        date_debut: dispo.date_debut, 
+        date_fin: dispo.date_fin, 
+        heure_debut: dispo.heure_debut, 
+        heure_fin: dispo.heure_fin
+    })
+    .then(dispo => {
             console.log("Disponibilite auto-generated ID:", dispo.id);
             console.log("Disponibilite DATE:", dispo.date_debut + " - " + dispo.date_fin);
             console.log("Disponibilite CRENEAU:", dispo.heure_debut, " - ", dispo.heure_fin);
@@ -32,11 +42,11 @@ async function createDispo(start_date, end_date, start_time, end_time){
  * @param {*} end_date date de fin de la disponibilité
  * @returns 
  */
-async function updateDateDispo(dispoId, start_date, end_date){
+async function updateDateDispo(url, dispo){
     let updated = {};
-    await Disponibilite.update({ date_debut: start_date, date_fin: end_date}, {
+    await Disponibilite.update({ date_debut: dispo.date_debut, date_fin: dispo.date_fin}, {
         where: {
-          id: dispoId
+          id: url.id
         },
         returning: true
     }).then(dispo => {
@@ -53,15 +63,14 @@ async function updateDateDispo(dispoId, start_date, end_date){
  * @param {*} end_time heure de fin de la disponibilité
  * @returns 
  */
-async function updateTimeDispo(dispoId, start_time, end_time){
+async function updateTimeDispo(url, dispo){
     let updated = {};
-    await Disponibilite.update({ heure_debut: start_time, heure_fin: end_time}, {
+    await Disponibilite.update({ heure_debut: dispo.heure_debut, heure_fin: dispo.heure_fin}, {
         where: {
-          id: dispoId
+          id: url.id
         },
         returning: true
     }).then(dispo => {
-        //updated = dispo;
         updated = dispo[1][0].dataValues;
         console.log("Done");
     });
@@ -73,11 +82,11 @@ async function updateTimeDispo(dispoId, start_time, end_time){
  * @param {*} dispoId id de la disponibilité à supprimer
  * @returns 
  */
-async function deleteDispo(dispoId){
+async function deleteDispo(url){
     let deleted = {}
     await Disponibilite.destroy({
         where: {
-          id: dispoId
+          id: url.id
         }
     }).then(() => {
         console.log("Cours deleted");
@@ -90,12 +99,9 @@ async function deleteDispo(dispoId){
  * @param {*} dispoId id de la disponibilité à lire
  * @returns 
  */
-async function getDispoById(dispoId){
+async function getDispo(){
     let single = {};
     await Disponibilite.findAll({
-            where: {
-              id: dispoId
-            }
         }
     ).then(dispo => {
         single = dispo.length == 0 ? dispo : dispo[0].dataValues;
@@ -104,4 +110,4 @@ async function getDispoById(dispoId){
     return single;
 }
 
-module.exports = {createDispo, updateDateDispo, updateTimeDispo, getDispoById, deleteDispo};
+module.exports = {createDispo, updateDateDispo, updateTimeDispo, getDispo, deleteDispo};

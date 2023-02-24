@@ -2,12 +2,12 @@
 class DisponibiliteDTO{
 
   //contructor
-  constructor(id, date_debut, date_fin,heure_debut,heure_fin){
-    this.id = id;
-    this.date_debut = date_debut;
-    this.date_fin = date_fin;
-    this.heure_debut = heure_debut;
-    this.heure_fin = heure_fin;
+  constructor(dispoDAO){
+    this.id = dispoDAO.id;
+    this.date_debut = dispoDAO.date_debut;
+    this.date_fin = dispoDAO.date_fin;
+    this.heure_debut = dispoDAO.heure_debut;
+    this.heure_fin = dispoDAO.heure_fin;
   }
 
   //method

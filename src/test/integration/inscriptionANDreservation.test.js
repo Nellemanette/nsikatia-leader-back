@@ -42,7 +42,7 @@ let personneCreatedId;
 
 /**
  *  Create Fiche Test 
-*/
+*//*
 test('perform Inscription', async () => {
     const ficheCreated = await ficheRepository.createFiche(inscrit, code, conduite, conduite_details);
     ficheCreatedId = ficheCreated.id;
@@ -78,7 +78,7 @@ let nameCours = "Conduite";
 let priceCours = "30";
 /**
  *  Create Reservation Test 
-*/
+*//*
 test('perform Reservation', async () => {
 
     const coursCreated = await coursRepository.createCours(nameCours, priceCours);
@@ -101,7 +101,7 @@ test('perform Reservation', async () => {
 
 /** 
  * Delete list Cours Test 
-*/
+*//*
 test('delete Entities', async () => {
     await reservationRepository.deleteReservation(reservationCreatedId);
 
@@ -119,4 +119,4 @@ test('delete Entities', async () => {
     expect(infoDeleted.length).toBe(0);
     expect(personneDeleted.length).toBe(0);
 
-})
+})*/

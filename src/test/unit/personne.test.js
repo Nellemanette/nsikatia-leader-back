@@ -1,65 +1,35 @@
 const personneRepository = require('../../repository/PersonneRepository');
+const infoRepository = require('../../repository/InfoRepository');
+const ficheRepository = require('../../repository/FicheRepository');
 
-let personneCreatedId;
-let identite = {
-        "statut": "student",
-        "nom": "Bridou",
-        "prenom": "Julie",
-        "age": 27
-    };
-let coordonnees = {
-        "telephone": "0755673389",
-        "email": "labelle@hotmail.fr",
-        "info_id": 2,
-        "ville": "Versailles"
-};
+const fs = require ("fs");
 
-let nomAfterUpdate;
-let villeAfterUpdate;
+let personneCreatedId = {id: 0};
+let identiteCreated= 0
+let compteCreated=0
+let infoCreated=0
+let info={}
+let fiche={}
+
+let data = JSON.parse(fs.readFileSync("dataset/personne.json"));
 
 /**
  *  Create Personne Test 
 */
 test('create Personne', async () => {
-     const res = await personneRepository.createPersonne(identite, coordonnees);
+     const res = await personneRepository.createPersonne(data);
         expect(res).not.toBe({});
-        expect(typeof res.identite.id).toBe("number");
-        expect(typeof res.identite).toBe("object");
-        expect(typeof res.coordonnees).toBe("object");
-        expect(res.identite.age).toBe(identite.age);//Comparer l'objet au lieu de vérifier tous les champs
-        expect(res.identite.nom).toBe(identite.nom);
-        expect(res.identite.prenom).toBe(identite.prenom);
-        expect(res.identite.statut).toBe(identite.statut);
-        expect(res.coordonnees.email).toBe(coordonnees.email);
-        expect(res.coordonnees.info_id).toBe(coordonnees.info_id);
-        //expect(res.coordonnees.telephone).toBe(coordonnees.telephone); Ajoute un espace à la fin du num
-        expect(res.coordonnees.ville).toBe(coordonnees.ville);
-        personneCreatedId = res.identite.id;
-});
+        expect(typeof res.identite_id).toBe("number");
+        expect(typeof res.compte_id).toBe("number");
+        expect(typeof res.info_id).toBe("number");
+        personneCreatedId.id = res.id;
+        identiteCreated = res.identite_id
+        compteCreated = res.compte_id
+        infoCreated = res.info_id
 
-/**  
- * Update date Personne Test
-*/
-test('update Personne', async () => {
-    let newNom = "Mireille";
-    identite.nom = newNom;
-    let newVille = "Grigny";
-    coordonnees.ville = newVille;
-    const res = await personneRepository.updatePersonne(personneCreatedId,identite, coordonnees);
-    expect(res).not.toBe({});
-        expect(typeof res.identite.id).toBe("number");
-        expect(typeof res.identite).toBe("object");
-        expect(typeof res.coordonnees).toBe("object");
-        expect(res.identite.age).toBe(identite.age);//Comparer l'objet au lieu de vérifier tous les champs
-        expect(res.identite.nom).toBe(newNom);
-        expect(res.identite.prenom).toBe(identite.prenom);
-        expect(res.identite.statut).toBe(identite.statut);
-        expect(res.coordonnees.email).toBe(coordonnees.email);
-        expect(res.coordonnees.info_id).toBe(coordonnees.info_id);
-        //expect(res.coordonnees.telephone).toBe(coordonnees.telephone); Ajoute un espace à la fin du num
-        expect(res.coordonnees.ville).toBe(newVille);
-        nomAfterUpdate = newNom;
-        villeAfterUpdate = newVille;
+        info = await infoRepository.getInfoById({id: infoCreated});
+        fiche = await ficheRepository.getFicheById({id: info.fiche_id});
+
 });
 
 
@@ -67,20 +37,29 @@ test('update Personne', async () => {
  * Read single Personne Test 
 */
 test('read Personne', async () => {
-
     const res = await personneRepository.getPersonneById(personneCreatedId);
     expect(res).not.toBe({});
-    expect(typeof res.identite.id).toBe("number");
-    expect(typeof res.identite).toBe("object");
-    expect(typeof res.coordonnees).toBe("object");
-    expect(res.identite.age).toBe(identite.age);//Comparer l'objet au lieu de vérifier tous les champs
-    expect(res.identite.nom).toBe(nomAfterUpdate);
-    expect(res.identite.prenom).toBe(identite.prenom);
-    expect(res.identite.statut).toBe(identite.statut);
-    expect(res.coordonnees.email).toBe(coordonnees.email);
-    expect(res.coordonnees.info_id).toBe(coordonnees.info_id);
-    //expect(res.coordonnees.telephone).toBe(coordonnees.telephone); Ajoute un espace à la fin du num
-    expect(res.coordonnees.ville).toBe(villeAfterUpdate);
+    expect(typeof res.id).toBe("number");
+    expect(typeof res.identite_id).toBe("number");
+    expect(typeof res.compte_id).toBe("number");
+    expect(typeof res.info_id).toBe("number");
+
+    data.identite.id = identiteCreated
+    expect(res.identite.dataValues).toEqual(data.identite);
+
+    data.compte.id = compteCreated
+    expect(res.compte.dataValues).toEqual(data.compte);
+
+    data.info.id = infoCreated
+    data.info.fiche.id = info.fiche_id
+    data.info.fiche.pratique_id = fiche.pratique_id
+    data.info.fiche.pratique.id = fiche.pratique_id
+    console.log(res.info.fiche)
+    expect(res.info.fiche.pratique.dataValues).toEqual(data.info.fiche.pratique);
+    expect(res.info.fiche.inscrit).toEqual(data.info.fiche.inscrit);
+    expect(res.info.fiche.code).toEqual(data.info.fiche.code);
+    expect(res.info.fiche.conduite).toEqual(data.info.fiche.conduite);
+    expect(res.info.prospect).toEqual(data.info.prospect);
 });
 
 /** 
@@ -96,8 +75,7 @@ test('read list Personne', async () => {
  * Delete Personne Test 
 */
 test('delete Personne', async () => {
-    let id = personneCreatedId;
-    await personneRepository.deletePersonne(id);
-    let res = await personneRepository.getPersonneById(id);
-    expect(res.length).toBe(0);
+    await personneRepository.deletePersonne(personneCreatedId);
+    let res = await personneRepository.getPersonneById(personneCreatedId);
+    expect(res.length).toEqual(0);
 })

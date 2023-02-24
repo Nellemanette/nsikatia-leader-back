@@ -1,18 +1,18 @@
 let repository = require('../repository/PersonneRepository');
 let converter = require('../model/converter/PersonneConverter');
 
-async function createPersonne(identite, coordonnees){
-    let dao = await repository.createPersonne(identite, coordonnees);   
+async function createPersonne(personne){
+    let dao = await repository.createPersonne(personne);   
     return converter.getPersonneDTO(dao);
 }
 
-async function updatePersonne(personneId, identite, coordonnees){
-    let dao = await repository.updatePersonne(personneId, identite, coordonnees);   
+async function updatePersonne(url, personne){
+    let dao = await repository.updatePersonne(url, personne);   
     return converter.getPersonneDTO(dao);
 }
 
-async function readSinglePersonne(personneId){
-    let dao = await repository.getPersonneById(personneId);   
+async function readSinglePersonne(url){
+    let dao = await repository.getPersonneById(url);   
     return converter.getPersonneDTO(dao);
 }
 
@@ -23,9 +23,14 @@ async function readListPersonne(){
 }
 
 
-async function deletePersonne(personneId){
-    let dao = await repository.deletePersonne(personneId);   
+async function deletePersonne(url){
+    let dao = await repository.deletePersonne(url);   
     return converter.getPersonneDTO(dao);
 }
 
-module.exports = {createPersonne, updatePersonne, readSinglePersonne, deletePersonne, readListPersonne};
+async function authPersonne(personne){
+    let dao = await repository.getPersonneByCredentials(personne);   
+    return converter.getPersonneDTO(dao);
+}
+
+module.exports = {createPersonne, updatePersonne, readSinglePersonne, deletePersonne, readListPersonne, authPersonne};

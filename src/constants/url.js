@@ -37,7 +37,20 @@ const url = {
             list: '/personnes_read'
         },
         update: '/personne_update',
-        delete: '/personne_delete'
+        delete: '/personne_delete',
+        auth: '/personne_authentication'
+    },
+    identite:{
+        create: '/identite_create',
+        read: '/identite_read',
+        update: '/identite_update',
+        delete: '/identite_delete'
+    },
+    compte:{
+        create: '/compte_create',
+        read: '/compte_read',
+        update: '/compte_update',
+        delete: '/compte_delete'
     },
     info:{
         create: '/info_create',
@@ -51,9 +64,21 @@ const url = {
             single: '/reservation_read',
             list: '/reservations_read'
         },
-        update: '/reservation_update',
+        update: {
+            reservation: '/reservation_update',
+            statut: {
+                validate: '/reservation_validate',
+                cancel: '/reservation_cancel'
+            }
+        },
         delete: '/reservation_delete'
     },
+    pratique: {
+        create: '/pratique_create',
+        read: 'pratique_read',
+        update: '/pratique_update',
+        delete: '/pratique_delete'
+    }
 
 }
 

@@ -1,14 +1,10 @@
 [
     {
-        "nom": "Code", 
+        "nom": "Conduite", 
         "prix": "30"
     },
     {
-        "id": 58,
         "nom": "Code",
         "prix": "30"
-    },
-    {
-        "id": 58
     }
 ]

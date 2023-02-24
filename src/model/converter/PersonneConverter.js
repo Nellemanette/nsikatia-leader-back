@@ -1,7 +1,11 @@
 let PersonneDTO = require("../dto/PersonneDTO");
 
 function getPersonneDTO(personneDAO){
-    return new PersonneDTO(personneDAO.identite, personneDAO.coordonnees);
+    console.log(personneDAO)
+    if(personneDAO==[] || personneDAO=={})
+        return {};
+    return new PersonneDTO(personneDAO);
+
 }
 
 function getPersonnesDTO(personnesDAO){
@@ -12,7 +16,7 @@ function getPersonnesDTO(personnesDAO){
     console.log(personnesDAO[1]);
     let list = []
     for(let personne in personnesDAO)
-        list.push(new PersonneDTO(personne.identite, personne.coordonnees));
+        list.push(new PersonneDTO(personne.id, personne.identite_id, personne.compte_id, personne.info_id));
 
     return list;
 }

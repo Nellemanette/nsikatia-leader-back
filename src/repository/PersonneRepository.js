@@ -1,35 +1,29 @@
 let Personne = require('../model/dao/PersonneDAO')
+let Identite = require('../model/dao/IdentiteDAO')
+let identiteRepository = require('./IdentiteRepository')
+let Compte = require('../model/dao/CompteDAO')
+let compteRepository = require('./CompteRepository')
+let Info = require('../model/dao/InfoDAO')
+let infoRepository = require('./InfoRepository')
+let Fiche = require('../model/dao/FicheDAO')
+let Pratique = require('../model/dao/PratiqueDAO')
 
-
-async function createPersonne(identite, coordonnees){
-    let created = {
-        identite: {id: 0, statut: '', nom: '', prenom:'', age: ''},
-        coordonnees: {telephone: '', email: '', info_id: '', ville: ''}    
-    }
-    await Personne.create({ 
-        statut: identite.statut,
-        nom: identite.nom,
-        prenom: identite.prenom,
-        age: identite.age,
-        telephone: coordonnees.telephone,
-        email: coordonnees.email,
-        info_id: coordonnees.info_id,
-        ville: coordonnees.ville,
+async function createPersonne(personne){
+    let created = {}
+    console.log(personne)
+    let identite = await identiteRepository.createIdentite(personne.identite);
+    let compte = await compteRepository.createCompte(personne.compte);
+    let info = await infoRepository.createInfo(personne.info);
+    await Personne.create({
+        identite_id: identite.id,
+        compte_id: compte.id,
+        info_id: info.id
     }).then(personne => {
-            console.log("Disponibilite auto-generated ID:", personne.id);
-            created.identite.id = personne.id;
-            created.identite.statut = personne.statut;
-            created.identite.nom = personne.nom;
-            created.identite.prenom = personne.prenom;
-            created.identite.age = personne.age;
-            created.coordonnees.telephone = personne.telephone;
-            created.coordonnees.email = personne.email;
-            created.coordonnees.info_id = personne.info_id;
-            created.coordonnees.ville = personne.ville;
-            //console.log(personne);
+            console.log("Personne auto-generated ID:", personne.id);
+            created = personne;
           })
           .catch((error) => {
-            console.log("** Erreur Création Fiche: "+error)
+            console.log("** Erreur Création Personne: "+error)
           });
     
     return created;
@@ -42,36 +36,21 @@ async function createPersonne(identite, coordonnees){
  * @param {*} end_date date de fin de la disponibilité
  * @returns 
  */
-async function updatePersonne(personneId, identite, coordonnees){
-    let updated = {
-        identite: {id: 0, statut: '', nom: '', prenom:'', age: ''},
-        coordonnees: {telephone: '', email: '', info_id: '', ville: ''}    
-    }
+async function updatePersonne(url, personne){//*** Pas ouverte à la modification ***
+    let updated = {}
     await Personne.update({ 
-        statut: identite.statut,
-        nom: identite.nom,
-        prenom: identite.prenom,
-        age: identite.age,
-        telephone: coordonnees.telephone,
-        email: coordonnees.email,
-        info_id: coordonnees.info_id,
-        ville: coordonnees.ville,
+        identite: personne.identite,
+        compte: personne.compte,
+        info: personne.info
     }, {
         where: {
-          id: personneId
+          id: url.id
         },
+        //include: [{model: Identite},{model: Compte},{model: Info, include: {model: Fiche}}/*,{model: Reservation}*/],
         returning: true
     }).then(personne => {
-        console.log("Disponibilite auto-generated ID:", personne[1][0].dataValues.id);
-        updated.identite.id = personne[1][0].dataValues.id;
-        updated.identite.statut = personne[1][0].dataValues.statut;
-        updated.identite.nom = personne[1][0].dataValues.nom;
-        updated.identite.prenom = personne[1][0].dataValues.prenom;
-        updated.identite.age = personne[1][0].dataValues.age;
-        updated.coordonnees.telephone = personne[1][0].dataValues.telephone;
-        updated.coordonnees.email = personne[1][0].dataValues.email;
-        updated.coordonnees.info_id = personne[1][0].dataValues.info_id;
-        updated.coordonnees.ville = personne[1][0].dataValues.ville;
+        console.log("Personne auto-generated ID:", personne[1][0].dataValues.id);
+        updated = personne[1][0].dataValues;
         console.log("Done");
     });
     return updated;
@@ -79,17 +58,18 @@ async function updatePersonne(personneId, identite, coordonnees){
 
 /**
  * 
- * @param {*} ficheId id de la disponibilité à supprimer
+ * @param {*} personneId id de la disponibilité à supprimer
  * @returns 
  */
-async function deletePersonne(personneId){
+async function deletePersonne(url){
     let deleted = {}
     await Personne.destroy({
         where: {
-          id: personneId
+          id: url.id
         }
+        //include: [{model: Identite},{model: Compte},{model: Info, include: {model: Fiche, include: {model: Pratique}}}/*,{model: Reservation}*/
     }).then(() => {
-        console.log("Cours deleted");
+        console.log("Personne deleted");
     }).catch((error) => {
         console.log("** Erreur Suppression Personne: "+error)
     });
@@ -101,32 +81,20 @@ async function deletePersonne(personneId){
  * @param {*} ficheId id de la disponibilité à lire
  * @returns 
  */
-async function getPersonneById(personneId){
-    let single = {
-        identite: {id: 0, statut: '', nom: '', prenom:'', age: ''},
-        coordonnees: {telephone: '', email: '', info_id: '', ville: ''}    
-    }
+async function getPersonneById(url){
+    console.log(url)
+    let single = {}
     await Personne.findAll(
         {
             where: {
-              id: personneId
-            }
+              id: url.id
+            },
+            include: [{model: Identite},{model: Compte},{model: Info, include: {model: Fiche, include: {model: Pratique}}}/*,{model: Reservation}*/]
         }
     ).then(personne => {
-        if(personne.length == 0){
-            single = personne;
-        }else{
-            single.identite.id = personne[0].dataValues.id;
-            single.identite.nom = personne[0].dataValues.nom;
-            single.identite.prenom = personne[0].dataValues.prenom;
-            single.identite.age = personne[0].dataValues.age;
-            single.identite.statut = personne[0].dataValues.statut;
-            single.coordonnees.email = personne[0].dataValues.email;
-            single.coordonnees.telephone= personne[0].dataValues.telephone;
-            single.coordonnees.ville = personne[0].dataValues.ville;
-            single.coordonnees.info_id = personne[0].dataValues.info_id;
-        }
-
+            single = personne.length == 0 ? personne : personne[0].dataValues;
+    }).catch((error) => {
+        console.log("** Erreur Lecture Personne: "+error)
     });
 
     return single;
@@ -135,11 +103,41 @@ async function getPersonneById(personneId){
 async function getPersonnes(){
     let list = {}
     await Personne.findAll().then(personnes => {
-        list = JSON.stringify(personnes, null, 4); //A COMPRENDRE!
-        //console.log("All cours:", JSON.stringify(cours, null, 4));
+        list = JSON.stringify(personnes, null, 4); //?
+    }).catch((error) => {
+        console.log("** Erreur Lecture Personne: "+error)
     });
 
     return list;
 }
 
-module.exports = {createPersonne, updatePersonne, getPersonneById, deletePersonne, getPersonnes};
+/**
+ * 
+ * @param {*} ficheId id de la disponibilité à lire
+ * @returns 
+ */
+async function getPersonneByCredentials(compteInput){
+    let single = {}
+    let compteFounded = await compteRepository.getCompteByCredentials(compteInput)
+    if(compteFounded.id != undefined){
+        await Personne.findAll(
+            {
+                where: {
+                    compte_id: compteFounded.id
+                },
+                include: [{model: Identite},{model: Compte},{model: Info, include: {model: Fiche, include: {model: Pratique}}}/*,{model: Reservation}*/]
+            }
+        ).then(personne => {
+            single = personne.length == 0 ? personne : personne[0].dataValues;
+        }).catch((error) => {
+            console.log("** Erreur Lecture Personne: "+error)
+        });
+        return single;
+    }
+    else
+        return single;
+
+
+}
+
+module.exports = {createPersonne, updatePersonne, getPersonneById, deletePersonne, getPersonnes, getPersonneByCredentials};

@@ -1,5 +1,7 @@
 const Sequelize = require('sequelize');
 let database = require('../../database/connect')
+let ReservationDAO = require('./ReservationDAO')
+
 const CoursDAO = database[1].define('cours', {
     // attributes:
     nom: {
@@ -11,7 +13,16 @@ const CoursDAO = database[1].define('cours', {
       allowNull: false
     },
   }, {
-    timestamps: false // Why ?
+    timestamps: false, // Why ?
+    freezeTableName: true //Evite que Sequelize pluralise le noms des tables par défaut
+
 });
+
+CoursDAO.associate = models => {
+  CoursDAO.belongsTo(models.ReservationDAO, {
+    foreignKey: 'id',
+    targetKey: 'cours_id'
+  });
+}
 
 module.exports = CoursDAO;

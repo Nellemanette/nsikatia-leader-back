@@ -7,23 +7,23 @@ let converter = require('../model/converter/CoursConverter');
  * @param {*} price prix du cours
  * @returns cours dto
  */
-async function createCours(name, price){
-    let dao = await repository.createCours(name, price);   
+async function createCours(cours){
+    let dao = await repository.createCours(cours);   
     return converter.getCoursDTO(dao);
 }
 
-async function updateCoursName(id, name){
-    let dao = await repository.updateCoursName(id, name);   
+async function updateCoursName(url, cours){
+    let dao = await repository.updateCoursName(url, cours);   
     return converter.getCoursDTO(dao);
 }
 
-async function updateCoursPrice(id, price){
-    let dao = await repository.updateCoursPrice(id,price);
+async function updateCoursPrice(url, cours){
+    let dao = await repository.updateCoursPrice(url, cours);
     return converter.getCoursDTO(dao);
 }
 
-async function deleteCours(id){
-    let dao = await repository.deleteCours(id);   
+async function deleteCours(url){
+    let dao = await repository.deleteCours(url);   
     return converter.getCoursDTO(dao);
 }
 
@@ -33,8 +33,8 @@ async function getCours(){
     //return converter.getCoursDTO(dao);
 }
 
-async function getCoursById(id){
-    let dao = await repository.getCoursById(id);  
+async function getCoursById(url){
+    let dao = await repository.getCoursById(url);  
     return converter.getCoursDTO(dao);
 }
 

@@ -1,16 +1,16 @@
 let Reservation = require('../model/dao/ReservationDAO')
+const { Op } = require("sequelize");
 
-
-async function createReservation(date_res, heure_debut, heure_fin, statut, cours_id, eleve_id){
+async function createReservation(reservation){
     let created = {}
     
     await Reservation.create({ 
-        date_res: date_res,
-        heure_debut: heure_debut,
-        heure_fin: heure_fin,
-        statut: statut,
-        cours_id: cours_id,
-        eleve_id: eleve_id,
+        date_res: reservation.date_res,
+        heure_debut: reservation.heure_debut,
+        heure_fin: reservation.heure_fin,
+        statut: reservation.statut,
+        cours_id: reservation.cours_id,
+        eleve_id: reservation.eleve_id,
     }).then(reservation => {
             console.log("Reservation auto-generated ID:", reservation.id);
             created = reservation;
@@ -22,22 +22,21 @@ async function createReservation(date_res, heure_debut, heure_fin, statut, cours
     return created;
 }
 
-async function updateReservation(reservationId, date_res, heure_debut, heure_fin, statut, cours_id, eleve_id){
+async function updateReservation(url, reservation){
     let updated = {};
     await Reservation.update({ 
-        date_res: date_res,
-        heure_debut: heure_debut,
-        heure_fin: heure_fin,
-        statut: statut,
-        cours_id: cours_id,
-        eleve_id: eleve_id,
+        date_res: reservation.date_res,
+        heure_debut: reservation.heure_debut,
+        heure_fin: reservation.heure_fin,
+        statut: reservation.statut,//Retirer les champs qui ne sont pas ouverts à la modification ?
+        cours_id: reservation.cours_id,
+        eleve_id: reservation.eleve_id,
     }, {
         where: {
-          id: reservationId
+          id: url.id
         },
         returning: true
     }).then(reservation => {
-        //updated = reservation;
         updated = reservation[1][0].dataValues;
         console.log("Done");
     }).catch((error) => {
@@ -46,11 +45,50 @@ async function updateReservation(reservationId, date_res, heure_debut, heure_fin
     return updated;
 }
 
-async function deleteReservation(reservationId){
+async function validateReservation(reservations){
+    let updated = {};
+    console.log(reservations)
+    await Reservation.update({ 
+        statut: "admis"
+    }, {
+        where: {
+          id: reservations
+        },
+        //returning: true
+    }).then(reservation => {
+        //updated = reservation[1][0].dataValues;
+        console.log("Done");
+    }).catch((error) => {
+        console.log("** Erreur Validation Réservation: "+error)
+      });
+    return updated;
+}
+
+async function cancelReservation(reservations){
+    let updated = {};
+    console.log(reservations)
+    console.log("Hello cancel")
+    await Reservation.update({ 
+        statut: "annule"
+    }, {
+        where: {
+          id: reservations
+        },
+        //returning: true
+    }).then(reservation => {
+        //updated = reservation[1][0].dataValues;
+        console.log("Done");
+    }).catch((error) => {
+        console.log("** Erreur Annulation Réservation: "+error)
+      });
+    return updated;
+}
+
+async function deleteReservation(url){
     let deleted = {}
     await Reservation.destroy({
         where: {
-          id: reservationId
+          id: url.id
         }
     }).then(() => {
         console.log("Cours deleted");
@@ -58,12 +96,12 @@ async function deleteReservation(reservationId){
     return deleted;
 }
 
-async function getReservationsByPersonneId(personneId){
+async function getReservationsByPersonneId(url){
     let list = {}
     await Reservation.findAll(
         {
             where: {
-                eleve_id: personneId
+                eleve_id: url.id
             }
         }
     ).then(reservation => {
@@ -75,7 +113,13 @@ async function getReservationsByPersonneId(personneId){
 
 async function getReservations(){
     let list = {}
-    await Reservation.findAll().then(reservation => {
+    await Reservation.findAll(
+        {
+            where: {
+                statut: {[Op.not]: "annule"}
+            }
+        }
+    ).then(reservation => {
         list = JSON.stringify(reservation, null, 4); //A COMPRENDRE!
         //console.log("All cours:", JSON.stringify(cours, null, 4));
     });
@@ -83,4 +127,4 @@ async function getReservations(){
     return list;
 }
 
-module.exports = {createReservation, updateReservation, getReservationsByPersonneId, deleteReservation, getReservations};
+module.exports = {createReservation, updateReservation, getReservationsByPersonneId, deleteReservation, getReservations, validateReservation, cancelReservation};

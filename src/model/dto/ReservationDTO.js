@@ -2,14 +2,14 @@
 class ReservationDTO {
 
   //contructor
-  constructor(id, date_res, heure_debut, heure_fin, statut, cours_id, eleve_id){
-    this.id = id;
-    this.date_res = date_res;
-    this.heure_debut = heure_debut;
-    this.heure_fin = heure_fin;
-    this.statut = statut;
-    this.cours_id = cours_id;
-    this.eleve_id = eleve_id;
+  constructor(reservationDAO){
+    this.id = reservationDAO.id;
+    this.date_res = reservationDAO.date_res;
+    this.heure_debut = reservationDAO.heure_debut;
+    this.heure_fin = reservationDAO.heure_fin;
+    this.statut = reservationDAO.statut;
+    this.cours_id = reservationDAO.cours_id;
+    this.eleve_id = reservationDAO.eleve_id;
   }
   //method
 }

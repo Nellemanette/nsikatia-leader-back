@@ -1,6 +1,8 @@
 const Sequelize = require('sequelize');
 let database = require('../../database/connect')
 
+let CoursDAO = require('./CoursDAO')
+
 const ReservationDAO = database[2].define('reservation', {
     // attributes
     date_res: {
@@ -32,4 +34,7 @@ const ReservationDAO = database[2].define('reservation', {
     freezeTableName: true //Evite que Sequelize pluralise le noms des tables par défaut
   });
 
+CoursDAO.associate = models => {
+    CoursDAO.hasMany(models.ReservationDAO)
+}
 module.exports = ReservationDAO;

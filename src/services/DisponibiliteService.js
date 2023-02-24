@@ -1,27 +1,27 @@
 let repository = require('../repository/DisponibiliteRepository');
 let converter = require('../model/converter/DisponibiliteConverter');
 
-async function createDispo(start_date, end_date, start_time, end_time){
-    let dao = await repository.createDispo(start_date, end_date, start_time, end_time);   
+async function createDispo(dispo){
+    let dao = await repository.createDispo(dispo);   
     return converter.getDisponibiliteDTO(dao);
 }
 
-async function updateDateDispo(id, start_date, end_date){
-    let dao = await repository.updateDateDispo(id, start_date, end_date);   
+async function updateDateDispo(url, dispo){
+    let dao = await repository.updateDateDispo(url, dispo);   
     return converter.getDisponibiliteDTO(dao);
 }
 
-async function updateTimeDispo(id, start_time, end_time){
-    let dao = await repository.updateTimeDispo(id, start_time, end_time);   
+async function updateTimeDispo(url, dispo){
+    let dao = await repository.updateTimeDispo(url, dispo);   
     return converter.getDisponibiliteDTO(dao);
 }
-async function readDispo(dispoId){
-    let dao = await repository.getDispoById(dispoId);   
+async function readDispo(){
+    let dao = await repository.getDispo();   
     return converter.getDisponibiliteDTO(dao);
 }
 
-async function deleteDispo(dispoId){
-    let dao = await repository.deleteDispo(dispoId);   
+async function deleteDispo(url){
+    let dao = await repository.deleteDispo(url);   
     return converter.getDisponibiliteDTO(dao);
 }
 

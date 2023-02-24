@@ -2,10 +2,10 @@
 class CoursDTO{
 
   //contructor
-  constructor(id=null, nom=null, prix=null){
-    this.id = id;
-    this.nom = nom;
-    this.prix = prix;
+  constructor(coursDAO){
+    this.id = coursDAO.id;
+    this.nom = coursDAO.nom;
+    this.prix = coursDAO.prix;
   }
 
   get getId(){

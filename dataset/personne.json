@@ -1,17 +1,35 @@
 {
     "identite":{
         "statut": "student",
-        "nom": "Makila",
-        "prenom": "Josué",
-        "age": 21
-    },
-    "coordonnees":{
-        "telephone": "0765237839",
-        "info_id": 1,
-        "ville": "Montlhéry"
+        "nom": "Marchand",
+        "prenom": "Solange",
+        "age": 20,
+        "ville": "Evry",
+        "telephone": "33715137139"
     },
     "compte":{
-        "email": "josuem@gmail.com",
-        "mot_de_passe": "jojoTest"
+        "email": "marchandsoso@gmail.com",
+        "mot_de_passe": "testsolange"
+    },
+    "info":{
+        "prospect": "site web",
+        "fiche": {
+            "inscrit": true,
+            "code": true,
+            "conduite": true,
+            "pratique":{
+                   "nbr_heures": "0h - 10h",
+                    "demarrage_arret": "bof bof",
+                    "vitesse": "bof bof",
+                    "freiner": "bof bof",
+                    "allure": "bof bof",
+                    "tourner": "bof bof",
+                    "volant": "bof bof",
+                    "braquer": "bof bof",
+                    "giratoire": "bof bof",
+                    "autoroute": "bof bof",
+                    "manoeuvre": "bof bof"
+            }
+        }
     }
 }
