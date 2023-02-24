@@ -36,7 +36,7 @@ CREATE TYPE niveau AS ENUM ('je maitrise', 'bof bof', 'je suis pas ouf', 'pas en
 CREATE TYPE heures AS ENUM ('0h - 10h', '10h - 20h', '20h - 30h', '+');
 CREATE TYPE classe AS ENUM ('Code', 'Conduite');
 CREATE TYPE tarif AS ENUM ('10', '30');
-CREATE TYPE etat AS ENUM ('validé', 'provisoire', 'en attente');
+CREATE TYPE etat AS ENUM ('validé', 'provisoire', 'en attente', 'admis', 'annule');
 
 CREATE TABLE Identite(
    id SMALLSERIAL,

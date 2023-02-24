@@ -64,7 +64,13 @@ const url = {
             single: '/reservation_read',
             list: '/reservations_read'
         },
-        update: '/reservation_update',
+        update: {
+            reservation: '/reservation_update',
+            statut: {
+                validate: '/reservation_validate',
+                cancel: '/reservation_cancel'
+            }
+        },
         delete: '/reservation_delete'
     },
     pratique: {

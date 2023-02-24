@@ -91,7 +91,9 @@ router.get(url.info.read, info.readFunction);
  * Route pour l'entité Réservation
  */
 router.post(url.reservation.create, reservation.createFunction);
-router.put(url.reservation.update, reservation.updateFunction);
+router.put(url.reservation.update.reservation, reservation.updateFunction);
+router.put(url.reservation.update.statut.validate, reservation.updateStatutFunction);
+router.put(url.reservation.update.statut.cancel, reservation.updateStatutFunction);
 router.delete(url.reservation.delete, reservation.deleteFunction);
 router.get(url.reservation.read.single, reservation.readSingleFunction);
 router.get(url.reservation.read.list, reservation.readListFunction);

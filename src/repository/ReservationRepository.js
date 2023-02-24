@@ -1,5 +1,5 @@
 let Reservation = require('../model/dao/ReservationDAO')
-
+const { Op } = require("sequelize");
 
 async function createReservation(reservation){
     let created = {}
@@ -45,6 +45,45 @@ async function updateReservation(url, reservation){
     return updated;
 }
 
+async function validateReservation(reservations){
+    let updated = {};
+    console.log(reservations)
+    await Reservation.update({ 
+        statut: "admis"
+    }, {
+        where: {
+          id: reservations
+        },
+        //returning: true
+    }).then(reservation => {
+        //updated = reservation[1][0].dataValues;
+        console.log("Done");
+    }).catch((error) => {
+        console.log("** Erreur Validation Réservation: "+error)
+      });
+    return updated;
+}
+
+async function cancelReservation(reservations){
+    let updated = {};
+    console.log(reservations)
+    console.log("Hello cancel")
+    await Reservation.update({ 
+        statut: "annule"
+    }, {
+        where: {
+          id: reservations
+        },
+        //returning: true
+    }).then(reservation => {
+        //updated = reservation[1][0].dataValues;
+        console.log("Done");
+    }).catch((error) => {
+        console.log("** Erreur Annulation Réservation: "+error)
+      });
+    return updated;
+}
+
 async function deleteReservation(url){
     let deleted = {}
     await Reservation.destroy({
@@ -74,7 +113,13 @@ async function getReservationsByPersonneId(url){
 
 async function getReservations(){
     let list = {}
-    await Reservation.findAll().then(reservation => {
+    await Reservation.findAll(
+        {
+            where: {
+                statut: {[Op.not]: "annule"}
+            }
+        }
+    ).then(reservation => {
         list = JSON.stringify(reservation, null, 4); //A COMPRENDRE!
         //console.log("All cours:", JSON.stringify(cours, null, 4));
     });
@@ -82,4 +127,4 @@ async function getReservations(){
     return list;
 }
 
-module.exports = {createReservation, updateReservation, getReservationsByPersonneId, deleteReservation, getReservations};
+module.exports = {createReservation, updateReservation, getReservationsByPersonneId, deleteReservation, getReservations, validateReservation, cancelReservation};

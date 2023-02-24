@@ -11,6 +11,19 @@ async function updateReservation(url, reservation){
     return converter.getReservationDTO(dao);
 }
 
+async function updateReservationValidate(reservations){
+    //let dao = 
+    await repository.validateReservation(reservations);   
+    //return converter.getReservationDTO(dao);
+}
+
+async function updateReservationCancel(reservations){
+    //let dao = 
+    await repository.cancelReservation(reservations);   
+    //return converter.getReservationDTO(dao);
+}
+
+
 async function readSinglePersonneReservation(url){
     let daoList = await repository.getReservationsByPersonneId(url);   
     return JSON.parse(daoList); 
@@ -26,7 +39,8 @@ async function readListReservation(){
 
 async function deleteReservation(url){
     let dao = await repository.deleteReservation(url);   
-    return converter.getReservationDTO(dao);
+    //return converter.getReservationDTO(dao);
+    return dao;
 }
 
-module.exports = {createReservation, updateReservation, readSinglePersonneReservation, readListReservation, deleteReservation};
+module.exports = {createReservation, updateReservation, readSinglePersonneReservation, readListReservation, deleteReservation, updateReservationValidate, updateReservationCancel};
