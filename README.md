@@ -25,9 +25,9 @@ Welcome to the Nsikatia-Leader Project ! 😀
  10. [Acknowledgments](#acknowledgments) 
 
 
-## Description 📜
+## Description 
 
-**Nsikatia Leader** is an application where clients can book classes with a private driving conductor.
+📜**Nsikatia Leader** is an application where clients can book classes with a private driving conductor.
 
 Here we are in the back side of the app.
 
@@ -60,7 +60,7 @@ Back side consists of two parts the server part (application) and the database p
 *MCD diagram of the database*
 
 
-## Technologies 🔨
+## Technologies 
 
 **Backend Programming Language**
 
@@ -122,7 +122,7 @@ Back side consists of two parts the server part (application) and the database p
 ├───README.md             <- File used to gather application important information
 ```
 
-## Getting Started ▶️
+## Getting Started 
 
 ### Prerequisites
 
@@ -201,7 +201,7 @@ We can now launch the application
 7. App is listening to the ```5000``` port. 
 We can now test one of the api route.
 
-## Usage 📖
+## Usage 
 
 **API**
 
@@ -361,7 +361,7 @@ Delete a single reservation by id
 
 AUTHENTIFICATION part
 
-## Testing ✅
+## Testing
 
 Application implements two types of tests: unit tests and integration tests with ```Jest``` framework
 
@@ -375,7 +375,7 @@ Launch a specific file:
 
 > npm test -- file_name.test.js
 
-## Roadmap 📉
+## Roadmap
 
 - Storage
 
@@ -401,14 +401,14 @@ Launch a specific file:
   &#121153; Set CD pipeline 
 
 
-## Contributing 🙌
+## Contributing 
 
 Section is not open yet...😕
 
-## Contact 📧
+## Contact
 
 Email address: ```bmalandila@yahoo.fr```
 
 Projet link: [Nsikatia-leader-back Github Project](https://github.com/Nellemanette/nsikatia-leader-back)
 
-## Acknowledgments 📚
+## Acknowledgments 
